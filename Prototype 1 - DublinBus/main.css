@@ -1,0 +1,32 @@
+/* dublinBus_p1.html */
+.my-sidebar{
+    margin-top: 20px;
+}
+
+.my-route-search{
+    position: absolute;
+    top: 60px;
+    left: 60px;
+    background-color: white;    
+}
+
+/* timetable.html */
+.my-timetable{
+    margin-top: 60px;
+}
+
+/* tickets_fares.html */
+.my-tickets{
+    margin-top: 60px;
+}
+
+/* contact.html */
+.my-contact-forms{
+    margin-top: 60px;
+}
+
+/* connections.html */
+.my-connections{
+    margin-top: 60px;
+}
+
