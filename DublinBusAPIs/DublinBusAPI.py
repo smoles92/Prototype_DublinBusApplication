@@ -41,12 +41,12 @@ for i in results['results']:
 # Retrieve Route Information
 # See section 3.4.5 of the document
 # Operator bac seems to equate to Dublin Bus.
-base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/routeinformation?routeid=46A&operator=bac&format=json'
+"""base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/routeinformation?routeid=46A&operator=bac&format=json'
 response = requests.get(base_url)
 results = response.json()
 stops = results['results'][0]
 for i in stops['stops']:
-    print(i)
+    print(i)"""
 
 # Retrieve Operator Informator
 # See section 3.4.6 of the document

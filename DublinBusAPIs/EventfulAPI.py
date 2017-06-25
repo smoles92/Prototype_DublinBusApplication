@@ -1,17 +1,19 @@
-import eventful
+# >> This program gets event information from Eventful.
+# q can be music or sports (or others, the tutorial does not give keywords).
+# t can be This Week (excludes weekend), This Weekend (excludes week, except for Friday), This Month, or a date like (23+June+2017)
+# though it seems to be not giving the events in the right date.
+# t can also be Future (default), Past, Friday (or other days), Next Month and Next x days also don't seem to be working. <<
 
-# q can be music or sports (or others, the tutorial does not give keywords)
-# t can be This Week (excludes weekend), This Weekend (excludes week, except for Friday), This Month, or a date like (23+June+2017) though it seems to be not giving the events in the right date
-# t can also be Future (default), Past, Friday (or other days), Next Month and Next x days also don't seem to be working
+import eventful
 
 # API key
 api = eventful.API('zVLrtqPJwL4c55nX')
 
 # API Call
-events = api.call('/events/search', q='sports', l='Dublin', t='12+November+2012')
+events = api.call('/events/search', q='sports', l='Dublin', t='Today')
 
 # Prints the whole data received
-#print(events)
+# print(events)
 
 # Prints the data in treated format
 for event in events['events']['event']:
