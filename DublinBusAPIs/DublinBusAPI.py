@@ -14,6 +14,7 @@ import pandas as pd
 #     print(i)
 #     counter += 1
 
+
 # Retrieve Timetable Bus Information by Date
 # See section 3.4.2 of the document
 # So far, not yet working
@@ -26,18 +27,18 @@ for i in results['results']:
 
 # Retrieve Full Timetable Bus Information
 # See section 3.4.3 of the document
-"""base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/timetableinformation?type=week&stopid=1304&routeid=17&format=json'
+"""base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/timetableinformation?operator=bac&type=week&stopid=1304&routeid=17&format=json'
 response = requests.get(base_url)
 results = response.json()
 for i in results['results']:
-    print(i)"""
+    print(i)
+"""
 
 # Retrieve Bus Stop Information
 # See section 3.4.4 of the document
 # Leave stopid and stopname empty to get info on all stops. Fill in to get just that stop.
-"""base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/busstopinformation?stopid=1304&format=json'
+"""base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/busstopinformation?operator=bac&format=json'
 response = requests.get(base_url)
-results = response.json()
 data = response.json()
 data2 = data['results'][8]
 # data3 = data2['operators']
@@ -60,7 +61,6 @@ for in_stops in inbound['stops']:
     for out_stops in outbound['stops']:
         if in_stops['stopid'] == out_stops['stopid']:
             print(in_stops)"""
-
 
 # Retrieve Operator Informator
 # See section 3.4.6 of the document
