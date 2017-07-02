@@ -10,10 +10,10 @@ import eventful
 api = eventful.API('zVLrtqPJwL4c55nX')
 
 # API Call
-events = api.call('/events/search', q='sports', l='Dublin', t='Today')
+events = api.call('/events/search', q='music', l='Dublin', t='2016022800-2016023000', sort_order='popularity')
 
 # Prints the whole data received
-# print(events)
+print(events)
 
 # Prints the data in treated format
 for event in events['events']['event']:
