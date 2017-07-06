@@ -163,7 +163,6 @@ def get_closest_bus_stop(due_time, stop_src, stop_ids, route_id):
 # This function computes the stops between where the buses were found and the source stop
 def get_all_stops(bus_position, stop_ids, at_stop_id):
     """Receives the list that says where each bus is, the list of stops in that route in that direction, and the source stop"""
-
     # Create empty list to hold the stops between where each bus is currently and the source stop
     list_of_stops = []
 
@@ -232,7 +231,7 @@ def info_for_model(stop_list, stops, route):
                 stops_bus_3.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
 
         # Now, we keep adding bus 2 and bus 3
-        if bus_number == 2:
+        elif bus_number == 2:
             # If we reach the stop where bus number 1 is, we must append this stop to both bus_number_3 and bus_number2 and
             # bus_number1 and decrease the bus_number counter
             if i == bus_1:
@@ -245,7 +244,7 @@ def info_for_model(stop_list, stops, route):
                 stops_bus_2.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
 
         # Here, we are now appending all the buses, until we finally reach the source stop
-        if bus_number == 1:
+        elif bus_number == 1:
             stops_bus_3.append({'stopid':i, 'delay':first_3_buses[2]['delay'], 'arrival_hour':first_3_buses[2]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
             stops_bus_2.append({'stopid':i, 'delay':first_3_buses[1]['delay'], 'arrival_hour':first_3_buses[1]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
             stops_bus_1.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
@@ -279,6 +278,7 @@ def main():
         # If the bus is due at the SRC stop, no need to look for it
         print('Original due time is', i['duetime'], 'minutes.')
         if i['duetime'] == 'Due' or int(i['duetime']) <= 2:
+            bus_position.append(int(at_stop_id))
             print('The bus it at', str(at_stop_id) + '.')
             print('Bus is delayed by', i['delay'], 'seconds. Or approximately', round(i['delay'] / 60), 'minutes.')
             print('\n<<---------------------------------------------------------->>')
