@@ -4,15 +4,15 @@ import pandas as pd
 
 # Retrieve Real Time Bus Information (for bus stop 1304 (which is my stop))
 # See section 3.4.1 of the document
-# base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=765&routeid=17&maxresults&operator&format=json'
-# response = requests.get(base_url)
-# results = response.json()
-# print(results)
-# counter = 1
-# for i in results['results']:
-#     print('Result Nº' + str(counter) + ':')
-#     print(i)
-#     counter += 1
+base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=768&routeid=46A&maxresults&operator&format=json'
+response = requests.get(base_url)
+results = response.json()
+print(results)
+counter = 1
+for i in results['results']:
+    print('Result Nº' + str(counter) + ':')
+    print(i)
+    counter += 1
 
 
 # Retrieve Timetable Bus Information by Date
