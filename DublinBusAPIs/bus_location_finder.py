@@ -26,7 +26,6 @@ def get_stop_list(route, direction):
     stop_list = []
     for i in rows:
         stop_list.append(i[0])
-    print(stop_list)
     return stop_list
 
 
@@ -72,11 +71,11 @@ def get_delay(list_of_buses):
         actual_arrival_seconds = int(actual_hours) * 3600 + int(actual_minutes) * 60 + int(actual_seconds)
 
         # Calculate the delay
-        delay = scheduled_arrival_seconds - actual_arrival_seconds
+        delay = actual_arrival_seconds - scheduled_arrival_seconds
 
         # Left these prints here just in case we want to visually compare the times
-        #print(i['scheduledarrivaldatetime'], i['arrivaldatetime'])
-        #print(delay)
+        # print('Scheduled arrival time:', i['scheduledarrivaldatetime'], 'Actual arrival time:', i['arrivaldatetime'])
+        # print(delay)
 
         # Append the delay to the dictionary that represents each bus, with key 'delay'
         i['delay'] = delay
@@ -133,7 +132,7 @@ def get_closest_bus_stop(due_time, stop_src, stop_ids, route_id):
             # If we found a 'Due' or within the arrival_within_minutes, return that index. That is the index of the stop where our bus is at/close to.
             if possible_stop['duetime'] == 'Due' or int(possible_stop['duetime']) <= arrival_within_minutes:
                 print('Found the bus with', due_time, 'minutes due time.')
-                print(pointer)
+                # print(pointer)
                 return pointer
             else:
                 # If the due time at the possible stop is less than the one at SRC, we're on the right path, and need to look for a stop farther from the SRC
@@ -159,7 +158,6 @@ def get_closest_bus_stop(due_time, stop_src, stop_ids, route_id):
         low_bound = 0
         high_bound = original
         pointer = original // 2
-        print('Outer pointer:', pointer)
 
         # If we start looking for a stop, previous to the SRC, were our bus has MORE duetime, we've gonne too far. Possibly, there are two buses running very close to one another,
         # and they may be due to our SRC stop at the same time (seen before too many times with the 17). In this case, we need to increase the original bound to take the stop where
@@ -199,7 +197,6 @@ def get_all_stops(bus_position, stop_ids, at_stop_id):
     list_of_stops = [list_of_stops[i] for i in [0,1,2]]
 
     # Return every stop between where the buses are the source stop
-    print('List of stops\n', list_of_stops)
     return list_of_stops
 
 
@@ -245,10 +242,10 @@ def info_for_model(stop_list, stops, route):
             # decrease the bus_number counter
             if i == bus_2:
                 bus_number -= 1
-                stops_bus_3.append({'stopid':i, 'delay':first_3_buses[1]['delay'], 'arrival_hour':first_3_buses[1]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
-                stops_bus_2.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
+                stops_bus_3.append({'stopid':i, 'delay':first_3_buses[1]['delay'], 'arrival_hour':first_3_buses[1]['arrivaldatetime'][11:13], 'datetime':first_3_buses[1]['arrivaldatetime'], 'previous_stop':previous_stop})
+                stops_bus_2.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'datetime':first_3_buses[0]['arrivaldatetime'], 'previous_stop':previous_stop})
             else:
-                stops_bus_3.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
+                stops_bus_3.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'datetime':first_3_buses[0]['arrivaldatetime'], 'previous_stop':previous_stop})
 
         # Now, we keep adding bus 2 and bus 3
         elif bus_number == 2:
@@ -256,25 +253,29 @@ def info_for_model(stop_list, stops, route):
             # bus_number1 and decrease the bus_number counter
             if i == bus_1:
                 bus_number -= 1
-                stops_bus_3.append({'stopid':i, 'delay':first_3_buses[2]['delay'], 'arrival_hour':first_3_buses[2]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
-                stops_bus_2.append({'stopid':i, 'delay':first_3_buses[1]['delay'], 'arrival_hour':first_3_buses[1]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
-                stops_bus_1.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
+                stops_bus_3.append({'stopid':i, 'delay':first_3_buses[2]['delay'], 'arrival_hour':first_3_buses[2]['arrivaldatetime'][11:13], 'datetime':first_3_buses[2]['arrivaldatetime'], 'previous_stop':previous_stop})
+                stops_bus_2.append({'stopid':i, 'delay':first_3_buses[1]['delay'], 'arrival_hour':first_3_buses[1]['arrivaldatetime'][11:13], 'datetime':first_3_buses[1]['arrivaldatetime'], 'previous_stop':previous_stop})
+                stops_bus_1.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'datetime':first_3_buses[0]['arrivaldatetime'], 'previous_stop':previous_stop})
             else:
-                stops_bus_3.append({'stopid':i, 'delay':first_3_buses[1]['delay'], 'arrival_hour':first_3_buses[1]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
-                stops_bus_2.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
+                stops_bus_3.append({'stopid':i, 'delay':first_3_buses[1]['delay'], 'arrival_hour':first_3_buses[1]['arrivaldatetime'][11:13], 'datetime':first_3_buses[1]['arrivaldatetime'], 'previous_stop':previous_stop})
+                stops_bus_2.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'datetime':first_3_buses[0]['arrivaldatetime'], 'previous_stop':previous_stop})
 
         # Here, we are now appending all the buses, until we finally reach the source stop
         elif bus_number == 1:
-            stops_bus_3.append({'stopid':i, 'delay':first_3_buses[2]['delay'], 'arrival_hour':first_3_buses[2]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
-            stops_bus_2.append({'stopid':i, 'delay':first_3_buses[1]['delay'], 'arrival_hour':first_3_buses[1]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
-            stops_bus_1.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'previous_stop':previous_stop})
+            stops_bus_3.append({'stopid':i, 'delay':first_3_buses[2]['delay'], 'arrival_hour':first_3_buses[2]['arrivaldatetime'][11:13], 'datetime':first_3_buses[2]['arrivaldatetime'], 'previous_stop':previous_stop})
+            stops_bus_2.append({'stopid':i, 'delay':first_3_buses[1]['delay'], 'arrival_hour':first_3_buses[1]['arrivaldatetime'][11:13], 'datetime':first_3_buses[1]['arrivaldatetime'], 'previous_stop':previous_stop})
+            stops_bus_1.append({'stopid':i, 'delay':first_3_buses[0]['delay'], 'arrival_hour':first_3_buses[0]['arrivaldatetime'][11:13], 'datetime':first_3_buses[0]['arrivaldatetime'], 'previous_stop':previous_stop})
     joined = [stops_bus_1, stops_bus_2, stops_bus_3]
     return joined
 
 
-# Everything runs from this function. It does not require any input.
+# Everything runs from this function. It receives the source and (maybe the destination?) stop id and bus route.
 def main(at_stop_id, bus_route):
-    print(at_stop_id, bus_route)
+    """This function receives the source(or destination, or both) stop_id and bus route, and will:
+    1) Get the next 3 buses arriving at that stop
+    2) Find where those buses are along the route
+    3) Compute the delay for each stop for all 3 buses
+    The end result is a dictionary that has delay, arrival_hour, stop_id and previous_stop."""
     # In the future, the data for these two variables will have to come from the website
     at_stop_id = at_stop_id
     bus_route = bus_route
@@ -291,7 +292,6 @@ def main(at_stop_id, bus_route):
     # Get stop list only up to source stop. Trying to solve error where we get a stop beyond the source stop for the location
     # of the bus
     source_stops = stop_ids[:(stop_ids.index(int(at_stop_id_original)) + 1)]
-    print('Source stops:', source_stops)
 
     # Get due times for first 3 buses at chosen origin, for specified route
     first_3_buses = get_due_time(at_stop_id, bus_route)
@@ -324,9 +324,8 @@ def main(at_stop_id, bus_route):
     # Get llst of stops starting at the stop where the bus is at up to the source stop
     list_of_stops = get_all_stops(bus_position, stop_ids, at_stop_id_original)
 
-    # Get the final data necessary to go into the model
+    # Get the final data necessary to go into the model and return it
     stops_for_model = info_for_model(stop_ids, list_of_stops, bus_route)
-    print(stops_for_model)
     return stops_for_model
 
 # if __name__ == '__main__':
