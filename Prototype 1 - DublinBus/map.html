@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8"/>
+        <title>BusLightyear App</title>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme: Look and Feel -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        
+        <!-- Link to the CSS stylesheet-->
+        <link rel="stylesheet" href="main.css">
+        
+        <!-- Link to ajax libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+      
+  </head>
+  <body>
+        <!-- Main container to give website 12-grid shape -->
+        <div class="container-fluid">
+            
+            <!-- Navigation Bar components -->
+            <header>
+                <nav class="navbar navbar-default navbar-fixed-top">
+                <!-- Navbar takes up total width of browser with fluid -->
+                    <div class="container-fluid my-navbar">
+                        <!-- Hamburger bar that collapses -->
+                        <div class="navbar-header">
+                            <!-- Data toggle: needs to collapse a div, Data target: ID ref below are linked  -->
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <!-- Dropdown menu in Navigation bar -->
+                            <ul class="nav navbar-nav navbar-left">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Home</div>
+                                        </div>
+                                        <li>
+                                            <button class="btn btn-primary">Home</button>
+                                        </li>
+                                        
+                                        <li><a href="/index.html">Home</a></li>
+                                        <li><a href="/timetable.html">Timetables</a></li>
+                                        <li><a href="tickets_fares.html">Tickets & Fares</a></li>
+                                        <li><a href="/connections.html">Connections</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="/contact.html">Contact Us</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <!-- Search bar for Navigation bar -->
+                            <form class="navbar-form navbar-left">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </form>
+                            
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+            </header>
+        </div>
+      
+        <!-- Map Container -->
+        <div class="container-fluid my-map-div"> 
+            <div class="row">
+            <h3>Dublin Bus <small>Route Planner</small></h3>
+                <div id="map"></div>
+                <script>
+                function initMap() {
+                    var dublin_loc = {lat: 53.347233503370575, lng: -6.259095666292751};
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 11,
+                    center: dublin_loc
+                    });
+                    var marker = new google.maps.Marker({
+                    position: dublin_loc,
+                    map: map
+                    });
+                }
+                </script>
+                <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=initMap">
+                </script>
+            </div>
+        </div>
+      
+        <!-- Inline Forms -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4>Journey</h4>
+                    <form action="" method="" class="form-inline">
+                        <div class="form-group my-changed-journey">
+                            <label for="route">Route</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Enter a route">
+                                </div>
+                            <label for="source">Source</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Select a source">
+                                </div>
+                            <label for="source">Destination</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Select a destination">
+                                </div>
+                            <label for="date">Date</label>
+                                <div class="form-group">
+                                    <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
+                                </div>      
+                            <label for="time">Time</label>
+                                <div class="form-group">
+                                    <input class="form-control" type="time" value="13:45:00" id="example-time-input">
+                                </div>
+                            <button type="submit" class="form-control btn btn-primary">Find Journey</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      
+        <div class="container">
+            <div class="row my-result">
+                <div class="col-xs-12">
+                    <h4>Results</h4>
+                    <div class="row my-individual-result">
+                        <div class="col-sm-2 text-center"><h4>Source</h4></div>
+                        <div class="col-sm-2 text-center"><h4>Destination</h4></div>
+                        <div class="col-sm-2 text-center"><h4>Journey Time</h4></div>
+                        <div class="col-sm-2 text-center"><h4>Price</h4></div>
+                        <div class="col-sm-4 text-center"><h4>Show Details</h4></div>
+                    </div>
+                    <div class="row my-individual-result">
+                        <div class="col-sm-2 text-center"><h5>Display Source</h5></div>
+                        <div class="col-sm-2 text-center"><h5>Display Destination</h5></div>
+                        <div class="col-sm-2 text-center"><h5>Display Journey Time</h5></div>
+                        <div class="col-sm-2 text-center"><h5>Display Price</h5></div>
+                        <div class="col-sm-4 text-center"><h5>More Information</h5></div>
+                    </div>
+                    <div class="row my-individual-result">
+                        <div class="col-sm-2 text-center"><h5>Display Source</h5></div>
+                        <div class="col-sm-2 text-center"><h5>Display Destination</h5></div>
+                        <div class="col-sm-2 text-center"><h5>Display Journey Time</h5></div>
+                        <div class="col-sm-2 text-center"><h5>Display Price</h5></div>
+                        <div class="col-sm-4 text-center"><h5>More Information</h5></div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+      
+        <!-- Footer --> 
+        <div class="row">
+            <footer class="col-sm-12 navbar-fixed-bottom my-footer">
+                <p class="text-center">&copy; Copyright 2017</p>
+            </footer>
+        </div>
+      
+      
+        
+      
+        <!-- jQuery file: Needs to be pasted above Bootstrap file to avoid errors -->    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>
