@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>BusLightyear App</title>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme: Look and Feel -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        
+        <!-- Link to the CSS stylesheet-->
+        <link rel="stylesheet" href="main.css">
+        
+        <!-- Link to ajax libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    
+    <body>
+        <!-- Main container to give website 12-grid shape -->
+        <div class="container">
+            
+            <!-- Navigation Bar components -->
+            <header>
+                <nav class="navbar navbar-default navbar-fixed-top">
+                <!-- Navbar takes up total width of browser with fluid -->
+                    <div class="container">
+                        <!-- Hamburger bar that collapses -->
+                        <div class="navbar-header">
+                            <!-- Data toggle: needs to collapse a div, Data target: ID ref below are linked  -->
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <!-- Image or Logo should be used here -->
+                            <a class="navbar-brand" href="/index.html">BusLightYear</a>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            
+                            <!-- Search bar for Navigation bar -->
+                            <form class="navbar-form navbar-left">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </form>
+                            
+                            <!-- Dropdown menu in Navigation bar -->
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#">Dublin Bus</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/index.html">Home</a></li>
+                                        <li><a href="/timetable.html">Timetables</a></li>
+                                        <li><a href="tickets_fares.html">Tickets & Fares</a></li>
+                                        <li><a href="/connections.html">Connections</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="/contact.html">Contact Us</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+            </header>
+            
+            <!-- Image Carousel -->
+            <div class="row">
+                <div class="col-sm-12 my-carousel">
+                    <div id="my-slider" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators dot nav -->
+                        <ol class="carousel-indicators">
+                            <!-- References back to the slider when click on list item change to desired slide -->
+                            <li data-target="#my-slider" data-slide-to="0" class="active"></li>
+                            <li data-target="#my-slider" data-slide-to="1"></li>
+                            <li data-target="#my-slider" data-slide-to="2"></li>
+                        </ol>
+                        
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <img src="dublinBusImages/dublin-city.jpg" alt="City">
+                                <div class="carousel-caption">
+                                    <h1>Slide 1</h1>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="dublinBusImages/Dublin-Wallpaper-6.jpg" alt="City">
+                                <div class="carousel-caption">
+                                    <h1>Slide 2</h1>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="dublinBusImages/BilbaoGuggenheim_EN-US11232447099_1366x768.jpg" alt="City">
+                                <div class="carousel-caption">
+                                    <h1>Slide 3</h1>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Controls/next and prev buttons for Navigation -->
+                        <!-- # Implies calling back to the slider, not linking to another page -->
+                        <!-- Button tells using link as button -->
+                        <!-- Data-slide tells slider which way to slide when the link is clicked -->
+                        <!-- Aria-hidden hides the arrow if not hovering over it -->
+                        <a class="left carousel-control" href="#my-slider" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <!-- People using screen reader will know this is button for prev slide -->
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#my-slider" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <!-- People using screen reader will know this is button for prev slide -->
+                            <span class="sr-only">Next</span>
+                        </a>
+                        
+                    </div>
+                    
+                    <!-- Form within Carousel -->
+                    <!-- Code adapted from https://www.bootply.com/101530 -->
+                    <div class="col-sm-4 my-route-search">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <form class="navbar-form navbar-left">
+                                        
+                                        <h4>Route Number</h4>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Please enter a route">
+                                        </div>
+                                        <!--<button id="div1" type="submit" class="btn btn-default" href="timetable.html">Send</button>-->
+                                        
+                                        <h4>Source</h4>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Please enter a source">
+                                        </div>
+                                        <!--<button id="div1" type="submit" class="btn btn-default" href="timetable.html">Send</button>-->
+                                        
+                                        <h4>Destination</h4>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Please enter a destination">
+                                        </div>
+                                        <!--<button id="div1" type="submit" class="btn btn-default" href="timetable.html">Send</button>-->
+                                        
+                                        <h4>Date</h4>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Please select a date">
+                                        </div>
+                                        <button id="div1" type="submit" class="form-control btn btn-default" href="timetable.html">Find Journey</button>
+                                    </form> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- Main text section and Aside sidebar section -->
+            <div class="row">
+                <section class="col-md-8">
+                    <h1>Page Title</h1>
+                    <p>Text</p>
+                </section>
+                
+                <aside class="col-md-4 my-sidebar">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Aside 1</div>
+                        <div class="panel-body">
+                            <img src="dublinBusImages/4174742-brooklyn-traffic.jpg" alt="transport" class="img-responsive">
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Aside 2</div>
+                        <div class="panel-body">
+                            <img src="dublinBusImages/Dublin-Wallpaper-6.jpg" alt="transport" class="img-responsive">
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Aside 3</div>
+                        <div class="panel-body">
+                            <img src="dublinBusImages/BilbaoGuggenheim_EN-US11232447099_1366x768.jpg" alt="cities" class="img-responsive">
+                        </div>
+                    </div>
+                </aside>
+            </div>
+            
+            <!-- Footer --> 
+            <div class="row">
+                <footer class="col-sm-12">
+                    <p class="text-center">&copy; Copyright 2017</p>
+                </footer>
+            </div>
+            
+            
+        </div>
+        
+        
+        <!-- jQuery file: Needs to be pasted above Bootstrap file to avoid errors -->    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>   
+    </body>
+</html>
