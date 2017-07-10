@@ -1,8 +1,10 @@
 from DublinBusAPIs import bus_location_finder
 from datetime import datetime
+from datetime import timedelta
 from dateutil import parser
 import requests
-from .model_prototype_0 import model
+from model_prototype_0 import model
+import time
 
 def holidays(date):
     publicholidays_2017 = ['2017-08-07', '2017-10-30', '2017-12-25', '2017-12-26',
@@ -44,8 +46,20 @@ def weather():
     # for i in results['current_observation']:
     #     print(i)
 
+
+def time_to_arrive(datetime, sec):
+    #year = (int(datetime[6:10]) * 31556926) + (int(datetime[3:5]) * 2629743.83) + (int(datetime[:2]) * 86400) + (int(datetime[11:13]) * 3600) + (int(datetime[14:16]) * 60) + (int(datetime[17:]))
+    new_time = datetime + timedelta(seconds=sec)
+    new_time = new_time.strftime('%d/%m/%Y %H:%M:%S')
+    return new_time
+
+
 def main():
-    information_from_bus_finder = bus_location_finder.main('2042', '46A')
+    print(time.time())
+    source_stop = '2042'
+    destination_stop = '804'
+    bus_route = '46A'
+    information_from_bus_finder = bus_location_finder.main(destination_stop, bus_route)
     rain = weather()
     for i in information_from_bus_finder:
         for j in i:
@@ -55,9 +69,16 @@ def main():
             holiday = holidays(j['datetime'])
             p_holiday = holiday[0]
             s_holiday = holiday[1]
-            print(delay, hour, weekday, p_holiday, s_holiday, rain)
-            print(model(delay, hour, weekday, p_holiday, s_holiday, rain))
-
+            # print(delay, hour, weekday, p_holiday, s_holiday, rain)
+            j['duration'] = (model(delay, hour, weekday, p_holiday, s_holiday, rain))[0]
+            j['predicted_arrival_time'] = (time_to_arrive(parser.parse(j['datetime']), j['duration']))
+    print(time.time())
+    counter = 1
+    for i in information_from_bus_finder:
+        print('Bus number', counter)
+        for j in i:
+            print(j)
+        counter += 1
 
 if __name__ == '__main__':
     main()

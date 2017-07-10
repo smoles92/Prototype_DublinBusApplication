@@ -29,7 +29,7 @@ def model(delay, hour, weekday, p_holiday, s_holiday, rain):
     df['Saturday'] = Saturday
     df['Sunday'] = Sunday
 
-    monday, tuesday, wednesday, thursday, friday, saturday, sunday = False
+    monday, tuesday, wednesday, thursday, friday, saturday, sunday = False, False, False, False, False, False, False
     if weekday == 0:
         monday = True
     elif weekday == 1:
@@ -60,10 +60,10 @@ def model(delay, hour, weekday, p_holiday, s_holiday, rain):
 
     # pd.DataFrame({'feature': X.columns, 'importance': rtr.feature_importances_})
 
-    input_data = pd.DataFrame({'Delay': delay, 'Monday': monday, 'Tuesday': tuesday, 'Wednesday': wednesday, 'Thursday': thursday\
-                           ,'Friday': friday, 'Saturday': saturday, 'Sunday': sunday, 'hour': hour, 'school_holiday': s_holiday,\
-                            'public_holiday': p_holiday, 'rain':rain})
+    input_data = pd.DataFrame({'Delay': [delay], 'Monday': [monday], 'Tuesday': [tuesday], 'Wednesday': [wednesday], 'Thursday': [thursday]\
+                           ,'Friday': [friday], 'Saturday': [saturday], 'Sunday': [sunday], 'hour': [hour], 'school_holiday': [s_holiday],\
+                            'public_holiday': [p_holiday], 'rain':[rain]})
 
     predict_duration = rtr.predict(input_data)
-    print(predict_duration)
+    # print(predict_duration)
     return predict_duration

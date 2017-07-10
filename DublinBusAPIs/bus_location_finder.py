@@ -104,7 +104,7 @@ def get_closest_bus_stop(due_time, stop_src, stop_ids, route_id):
             break
 
     # Innitialize pointer to be halfway between the lowbound (set to 0 index) and the highbound (the SRC stop).
-    pointer = original//2
+    pointer = original//4
     low_bound = 0
 
     # Optimally we want to find the stop where our bus is just 1 minute away, for better accuracy. But sometimes that is not possible, so we will
@@ -131,8 +131,16 @@ def get_closest_bus_stop(due_time, stop_src, stop_ids, route_id):
 
             # If we found a 'Due' or within the arrival_within_minutes, return that index. That is the index of the stop where our bus is at/close to.
             if possible_stop['duetime'] == 'Due' or int(possible_stop['duetime']) <= arrival_within_minutes:
-                print('Found the bus with', due_time, 'minutes due time.')
-                # print(pointer)
+                # ('Found the bus with', new_due_time_due, 'minutes due time.')
+                # This for loop is to check if the previous bus stop(s) have the same due time, and find a closer more accurae stop
+                # print('Original pointer:', pointer)
+                for i in range(pointer - 1, 0, -1):
+                    if new_due_time_due == (filter_buses(get_due_time(str(stop_ids[i]), route_id))['duetime']):
+                        pointer = i
+                        # print('New pointer:', pointer)
+                    else:
+                        break
+                # Return the pointer, the index of the stop
                 return pointer
             else:
                 # If the due time at the possible stop is less than the one at SRC, we're on the right path, and need to look for a stop farther from the SRC
@@ -141,12 +149,12 @@ def get_closest_bus_stop(due_time, stop_src, stop_ids, route_id):
                     due_time = possible_stop['duetime']
                     # Change the highbound to the pointer and reduce our pointer again to halfway between lowbound and highbound
                     high_bound = pointer
-                    pointer -= ((high_bound - low_bound)//2)
+                    pointer -= ((high_bound - low_bound)//4)
                 else:
                     # If the due time at the possible stop is bigger than the one at SRC, we've gone too far, and need to look for a stop closer to the SRC
                     # The lowbound becomes the pointer and we move the pointer, again, to halfway between the lowbound and the highbound
                     low_bound = pointer
-                    pointer += ((high_bound - low_bound)//2)
+                    pointer += ((high_bound - low_bound)//4)
             # If we found a better (shortter) due time, we store this one for the next iteration and keep looking for an even better one
             last_due_time = new_due_time_due
 
@@ -157,7 +165,7 @@ def get_closest_bus_stop(due_time, stop_src, stop_ids, route_id):
         # Reset our lowbound, highbound and pointer to restart the search
         low_bound = 0
         high_bound = original
-        pointer = original // 2
+        pointer = original // 4
 
         # If we start looking for a stop, previous to the SRC, were our bus has MORE duetime, we've gonne too far. Possibly, there are two buses running very close to one another,
         # and they may be due to our SRC stop at the same time (seen before too many times with the 17). In this case, we need to increase the original bound to take the stop where
@@ -168,6 +176,39 @@ def get_closest_bus_stop(due_time, stop_src, stop_ids, route_id):
 
     # Just a token return
     return 0
+
+def get_closest_stop_test(due_time, stop_src, stop_ids, route_id):
+    pointer = stop_ids.index(int(stop_src))
+    # print(stop_ids[pointer])
+    arrival_within_minutes = 1
+    # print('inside test')
+    while True:
+        while pointer >= 0:
+            # Once more, get the buses for the stop we are currently looking at
+            first_3_buses = get_due_time(str(stop_ids[pointer]), route_id)
+
+            # Get just the first bus, since we already have the 3 buses from our SRC stop (this one is just looking for where one of those 3 buses is)
+            possible_stop = filter_buses(first_3_buses)
+            if stop_ids[pointer] == 320 or stop_ids[pointer] == 349:
+                pointer -= 1
+                continue
+            # print(possible_stop['duetime'], str(stop_ids[pointer]))
+            duetime = possible_stop['duetime']
+            if possible_stop['duetime'] == 'Due' or int(possible_stop['duetime']) <= arrival_within_minutes:
+                # print('Test, found with:', possible_stop['duetime'], '-', stop_ids[pointer])
+                for i in range(pointer - 1, 0, -1):
+                    better_stop = (filter_buses(get_due_time(str(stop_ids[i]), route_id))['duetime'])
+                    if due_time == better_stop or better_stop == 'Due':
+                        pointer = i
+                        # print('New pointer:', pointer)
+                    else:
+                        break
+                # Return the pointer, the index of the stop
+                return pointer
+            pointer -= 1
+        arrival_within_minutes += 1
+        pointer = stop_ids.index(int(stop_src))
+
 
 
 # This function computes the stops between where the buses were found and the source stop
@@ -226,6 +267,9 @@ def info_for_model(stop_list, stops, route):
         # Get the times for the buses at the given stop
         first_3_buses = get_due_time(str(i), route)
 
+        if len(first_3_buses) == 0:
+            # print('Something went wrong!')
+            continue
         # Add in the delay
         get_delay(first_3_buses)
 
@@ -301,6 +345,7 @@ def main(at_stop_id, bus_route):
 
     # Find where the buses are store it in list
     bus_position = []
+    at_stop_id_test = at_stop_id
     for i in first_3_buses:
         # If the bus is due at the SRC stop, no need to look for it
         print('Original due time is', i['duetime'], 'minutes.')
@@ -312,14 +357,17 @@ def main(at_stop_id, bus_route):
             continue
 
         # But if its not, we will need to go into the bus finder algorithm
-        pointer = get_closest_bus_stop(i['duetime'], at_stop_id, source_stops, bus_route)
-        print('The bus is at', str(stop_ids[pointer]) + '.')
-        bus_position.append(stop_ids[pointer])
+        # pointer = get_closest_bus_stop(i['duetime'], at_stop_id, source_stops, bus_route)
+        pointer_test = get_closest_stop_test(i['duetime'], at_stop_id_test, source_stops, bus_route)
+        print('The bus is at', str(stop_ids[pointer_test]) + '.')
+        bus_position.append(stop_ids[pointer_test])
         print('Bus is delayed by', i['delay'], 'seconds. Or approximately', round(i['delay'] / 60), 'minutes.')
         print('\n<<---------------------------------------------------------->>')
 
         # Next we reduce the pointer (our index) by one, so we don't risk getting the same bus again (except detailed exception as explained previously)
-        at_stop_id = str(stop_ids[pointer - 1])
+        # at_stop_id = str(stop_ids[pointer - 1])
+        at_stop_id_test = str(stop_ids[pointer_test - 1])
+
 
     # Get llst of stops starting at the stop where the bus is at up to the source stop
     list_of_stops = get_all_stops(bus_position, stop_ids, at_stop_id_original)
