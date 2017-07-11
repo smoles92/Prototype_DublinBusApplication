@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    {% load staticfiles %}
       <meta charset="utf-8"/>
         <title>BusLightyear App</title>
         
@@ -10,20 +11,15 @@
         <!-- Optional theme: Look and Feel -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         
-        
         <!-- Link to ajax libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-      
-      
-        <!-- Google Maps -->
-        <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-    
+      	      	
+      	<script type="text/javascript" src="{% static 'dublinbuspredict/js/displaySearch.js' %}"></script>
+        <!-- Google Maps -->    
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=initMap"></script>
-        
-      
+
   </head>
   <body>
-  		{% load staticfiles %}
     	<link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />
     	
         <!-- Main container to give website 12-grid shape -->
@@ -88,25 +84,6 @@
             <div class="row">
             <h3>Dublin Bus <small>Route Planner</small></h3>
                 <div id="map"></div>
-                
-                
-                <script>
-                  
-                function initMap() {
-                    var dublin_loc = {lat: 53.347233503370575, lng: -6.259095666292751};
-                    var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 11,
-                    center: dublin_loc
-                    });
-                    var marker = new google.maps.Marker({
-                    position: dublin_loc,
-                    map: map
-                    });
-                }
-                </script>
-                <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=initMap">
-                </script>
             </div>
         </div>
       
@@ -180,13 +157,5 @@
             </footer>
         </div>
       
-      
-        
-      
-        <!-- jQuery file: Needs to be pasted above Bootstrap file to avoid errors -->    
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </body>
 </html>
