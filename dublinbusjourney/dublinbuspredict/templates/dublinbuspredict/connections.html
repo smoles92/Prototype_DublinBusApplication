@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Bootstrap Example with CDN</title>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme: Look and Feel -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        
+        
+
+    </head>
+    <body>
+    	{% load staticfiles %}
+    	<link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />
+        <!-- Navigation Bar components -->
+            <header>
+                <nav class="navbar navbar-default navbar-fixed-top">
+                <!-- Navbar takes up total width of browser with fluid -->
+                    <div class="container-fluid my-navbar">
+                        <!-- Hamburger bar that collapses -->
+                        <div class="navbar-header">
+                            <!-- Data toggle: needs to collapse a div, Data target: ID ref below are linked  -->
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <!-- Dropdown menu in Navigation bar -->
+                            <ul class="nav navbar-nav navbar-left">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Home</div>
+                                        </div>
+                                        <li>
+                                            <button class="btn btn-primary">Home</button>
+                                        </li>
+                                        
+                                        <li><a href="/index.html">Home</a></li>
+                                        <li><a href="/timetable.html">Timetables</a></li>
+                                        <li><a href="tickets_fares.html">Tickets & Fares</a></li>
+                                        <li><a href="/connections.html">Connections</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="/contact.html">Contact Us</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            
+                            
+                            
+                            <!-- Search bar for Navigation bar -->
+                            <form class="navbar-form navbar-left">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </form>
+                            
+                            
+                            
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+            </header>
+        
+       
+        <div class="container">
+            <div class="row">
+                <!-- On a med device we want to push this div by 8 columns -->
+                <!-- Changing bg danger to bg cover allows you to add cover image instead of default colour -->
+                <section class="col-lg-12 col-md-8 my-connections">
+                    <h1>Transport Connections <small>Dublin</small></h1>
+                    <p class="lead">External websites for connections in Dublin</p>
+                </section>
+                
+                <br>
+                
+                <div class="row">
+                    <section class="col-md-4 col-md-offset-4 my-sidebar">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Bus Eireann</div>
+                        <div class="panel-body">
+                            <a href="http://www.buseireann.ie/">
+                            	{% load static %}
+                                <img src="{% static 'dublinbuspredict/images/Bus-Eireann.jpg' %}" alt="Bus" class="img-responsive">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Luas</div>
+                        <div class="panel-body">
+                            <a href="https://www.luas.ie/">
+                            	{% load static %}
+                                <img src="{% static 'dublinbuspredict/images/luas-logo.jpg' %}" alt="Luas" class="img-responsive">
+                            </a>
+                        </div>
+                    </div>
+                    </section>
+                </div>
+                
+                <div class="row">
+                    <section class="col-md-4 col-md-offset-4 my-sidebar">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">DART</div>
+                        <div class="panel-body">
+                            <a href="http://www.irishrail.ie/about-us/dart-commuter">
+                            	{% load static %}
+                                <img src="{% static 'dublinbuspredict/images/Dublin_DART_Logo.jpg' %}" alt="Dart" class="img-responsive">
+                            </a>
+                        </div>
+                    </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Taxis</div>
+                            <div class="panel-body">
+                            <a href="https://ie.mytaxi.com/hailoisnowmytaxi">
+                            	{% load static %}
+                                <img src="{% static 'dublinbuspredict/images/myTaxi-logo.jpg' %}" alt="Dart" class="img-responsive">
+                            </a>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <!-- Footer -->
+        <div class="container-fluid"> 
+        <div class="row">
+            <footer class="col-sm-12 my-footer">
+                <p class="text-center">&copy; Copyright 2017</p>
+            </footer>
+        </div>
+        </div>
+   
+        
+        
+        
+        
+        
+        
+        
+        
+        <!-- jQuery file: Needs to be pasted above Bootstrap file to avoid errors -->    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>   
+    </body>
+</html>
