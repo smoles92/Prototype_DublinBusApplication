@@ -244,16 +244,16 @@ class Raw2013(models.Model):
 #         db_table = 'historic_data'
 # 
 # 
-# class PilotRoutes(models.Model):
-#     route_id = models.CharField(max_length=45)
-#     stop_id = models.IntegerField()
-#     sequence = models.IntegerField()
-#     direction = models.IntegerField()
-#     unique_id = models.AutoField(primary_key=True)
-# 
-#     class Meta:
-#         managed = False
-#         db_table = 'pilot_routes'
+class PilotRoutes(models.Model):
+    route_id = models.CharField(max_length=45)
+    stop_id = models.IntegerField()
+    sequence = models.IntegerField()
+    direction = models.IntegerField()
+    unique_id = models.AutoField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'pilot_routes'
 # 
 # 
 # class Weather2012(models.Model):

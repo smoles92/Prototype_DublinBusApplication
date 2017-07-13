@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8"/>
-        <title>BusLightyear App</title>
+        {% load staticfiles %}
+            <meta charset="utf-8"/>
+            <title>BusLightyear App</title>
         
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+            <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-        <!-- Optional theme: Look and Feel -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+            <!-- Optional theme: Look and Feel -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
                
-        <!-- Link to ajax libraries -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        
-        
+            <!-- Link to ajax libraries -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+            <script type="text/javascript" src="{% static 'dublinbuspredict/js/jsIndex.js' %}"></script>
     </head>
+
     <body>
-    	{% load staticfiles %}
     	<link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />
-        
+
+
+
         <!-- Main container to give website 12-grid shape -->
         <div class="container-fluid">
             
@@ -169,21 +172,46 @@
                         <!-- Form within Carousel -->
                         <!-- Code adapted from https://www.bootply.com/101530 -->
                         <div class="col-lg-3 col-md-6 col-sm-6 my-route-search">
-                            <form class="navbar-form navbar-left" action="map.html">
+                            <form class="navbar-form navbar-left" onsubmit="passToMap(); return false;">
                                         
                                 <h4>Route Number</h4>
                                 <div class="form-group row">
-                                    <input type="text" class="form-control" placeholder="Please enter a route">
+                                    {% load static %}
+                                    <div class="dropdown">
+                                        <input id="search-box-1" oninput="searchFunctionRoute()" type="text" name="search" placeholder="Enter route nº...">
+                                        <div class="dropdown-content">
+                                            <ul class="dropdown-list" id ="dropdown-list-1">
+                                            {% for route in list_routes %}
+                                                <li><a onclick='getStops("{{ route }}")'>{{ route }}</a></li>
+                                            {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!--<input type="text" class="form-control" placeholder="Please enter a route">-->
                                 </div>
                                         
                                 <h4>Source</h4>
                                 <div class="form-group row">
-                                    <input type="text" class="form-control" placeholder="Please enter a source">
+                                    <div class="dropdown">
+                                        <input id="search-box-2" oninput="searchFunctionSRC()" type="text" name="search2" placeholder="Enter starting stop!">
+                                        <div class="dropdown-content">
+                                            <ul class="dropdown-list" id="dropdown-list-2">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!--<input type="text" class="form-control" placeholder="Please enter a source">-->
                                 </div>
                                         
                                 <h4>Destination</h4>
                                 <div class="form-group row">
-                                    <input type="text" class="form-control" placeholder="Please enter a destination">
+                                    <div class="dropdown">
+                                        <input id="search-box-3" oninput="searchFunctionDest()" type="text" name="search2" placeholder="Enter destination stop!">
+                                        <div class="dropdown-content">
+                                            <ul class="dropdown-list" id="dropdown-list-3">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!--<input type="text" class="form-control" placeholder="Please enter a destination">-->
                                 </div>
                                         
                                 <h4>Date</h4>
@@ -197,7 +225,21 @@
                                 </div>   
                                 
                                 <!-- Find Journey Submit button -->
-                                <button type="submit" class="form-control btn btn-primary">Find Journey</button>
+                                {% load static %}
+                                <button type="button" id="submit-route" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
+                                <script>
+                                    document.getElementById("submit-route").addEventListener("click", function(){
+                                        route = document.getElementById("search-box-1").value;
+                                        source = document.getElementById("search-box-2").value;
+                                        destination = document.getElementById("search-box-3").value;
+                                        console.log('Route:', route)
+                                        console.log('Source:', source)
+                                        console.log('Destination:', destination)
+                                        $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
+                                            console.log(d)
+                                        });
+                                    });
+                                </script>
                             </form> 
                         </div>
                     </div>
