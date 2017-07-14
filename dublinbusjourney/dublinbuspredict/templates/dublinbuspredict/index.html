@@ -3,25 +3,28 @@
     <head>
         <meta charset="utf-8"/>
         <title>BusLightyear App</title>
-        
+
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
         <!-- Optional theme: Look and Feel -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-               
+
+        <!-- Link to the CSS stylesheet-->
+        <link rel="stylesheet" href="main.css">
+
         <!-- Link to ajax libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         
-        
-    </head>
-    <body>
-    	{% load staticfiles %}
+        {% load staticfiles %}
     	<link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />
-        
+    </head>
+
+    <body>
+
         <!-- Main container to give website 12-grid shape -->
         <div class="container-fluid">
-            
+
             <!-- Navigation Bar components -->
             <header>
                 <nav class="navbar navbar-default navbar-fixed-top">
@@ -52,12 +55,12 @@
                                             <button class="btn btn-primary">Home</button>
                                         </li>
                                         
-                                        <li><a href="{% url 'dublinbuspredict:index' %}">Home</a></li>
-                                        <li><a href="{% url 'dublinbuspredict:map' %}">Timetables</a></li>
-                                        <li><a href="{% url 'dublinbuspredict:tickets_fares' %}">Tickets & Fares</a></li>
-                                        <li><a href="{% url 'dublinbuspredict:connections' %}">Connections</a></li>
+                                        <li><a href="/dublinbuspredict/">Home</a></li>
+                                        <li><a href="/dublinbuspredict/map">Timetables</a></li>
+                                        <li><a href="/dublinbuspredict/tickets_fares">Tickets & Fares</a></li>
+                                        <li><a href="/dublinbuspredict/connections">Connections</a></li>
                                         <li role="separator" class="divider"></li>
-                                        <li><a href="{% url 'dublinbuspredict:contact' %}">Contact Us</a></li>
+                                        <li><a href="/dublinbuspredict/contact">Contact Us</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -79,28 +82,28 @@
                     </div><!-- /.container-fluid -->
                 </nav>
             </header>
-            
+
             <!-- Image Carousel -->
-            
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 my-carousel">
-                    <div id="my-slider" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators dot nav -->
-                        <ol class="carousel-indicators">
-                            <!-- References back to the slider when click on list item change to desired slide -->
-                            <li data-target="#my-slider" data-slide-to="0" class="active"></li>
-                            <li data-target="#my-slider" data-slide-to="1"></li>
-                            <li data-target="#my-slider" data-slide-to="2"></li>
-                            <li data-target="#my-slider" data-slide-to="3"></li>
-                            <li data-target="#my-slider" data-slide-to="4"></li>
-                            <li data-target="#my-slider" data-slide-to="5"></li>
-                            <li data-target="#my-slider" data-slide-to="6"></li>
-                            <li data-target="#my-slider" data-slide-to="7"></li>
-                            <li data-target="#my-slider" data-slide-to="8"></li>
-                        </ol>
-                        
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner my-carousel-img" role="listbox">
+            <div class="container-fluid">
+                <div class="row my-carousel">
+                    <div class="col-lg-8">
+                        <div id="my-slider" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators dot nav -->
+                            <ol class="carousel-indicators">
+                                <!-- References back to the slider when click on list item change to desired slide -->
+                                <li data-target="#my-slider" data-slide-to="0" class="active"></li>
+                                <li data-target="#my-slider" data-slide-to="1"></li>
+                                <li data-target="#my-slider" data-slide-to="2"></li>
+                                <li data-target="#my-slider" data-slide-to="3"></li>
+                                <li data-target="#my-slider" data-slide-to="4"></li>
+                                <li data-target="#my-slider" data-slide-to="5"></li>
+                                <li data-target="#my-slider" data-slide-to="6"></li>
+                                <li data-target="#my-slider" data-slide-to="7"></li>
+                                <li data-target="#my-slider" data-slide-to="8"></li>
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner my-carousel-img" role="listbox">
                             <div class="item active">
                             	{% load static %}
                                 <img src="{% static 'dublinbuspredict/images/dublin-city.jpg' %}" alt="City">
@@ -165,76 +168,143 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- Form within Carousel -->
-                        <!-- Code adapted from https://www.bootply.com/101530 -->
-                        <div class="col-lg-3 col-md-6 col-sm-6 my-route-search">
-                            <form class="navbar-form navbar-left" action="map.html">
-                                        
-                                <h4>Route Number</h4>
-                                <div class="form-group row">
-                                    <input type="text" class="form-control" placeholder="Please enter a route">
+					</div>
+				</div>
+
+                    <!-- Adapted from: https://bootsnipp.com/snippets/50AZX -->
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-wrapper">
+                                    <div class="my-form">
+                                        <div class="col-lg-12">
+
+                                            <div class="col-lg-12 form-bg">
+                                                <div class="main-form">
+                                                    <div role="tabpanel">
+                                                        <!-- Nav tabs -->
+                                                        <ul class="nav nav-tabs" role="tablist">
+                                                            <li role="presentation" class="active">
+                                                                <a href="#route" aria-controls="route" role="tab" data-toggle="tab">Route</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a href="#planMyJourney" aria-controls="planMyJourney" role="tab" data-toggle="tab">Plan My Journey</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a href="#geolocationNearby" aria-controls="geolocationNearby" role="tab" data-toggle="tab">Nearby</a>
+                                                            </li>
+                                                        </ul>
+
+
+
+                                                        <!-- Tab panes -->
+                                                        <div class="tab-content">
+                                                            <div role="tabpanel" class="tab-pane active" id="route">
+                                                                <form action="" method="get" accept-charset="utf-8">
+
+                                                                    <div class="form-group row">
+                                                                        <input type="text" class="form-control" placeholder="Please enter a route">
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <input type="text" class="form-control" placeholder="Please enter a source">
+                                                                    </div>
+
+
+                                                                    <div class="form-group row">
+                                                                        <input type="text" class="form-control" placeholder="Please enter a destination">
+                                                                    </div>
+
+
+
+
+                                                                    <!-- Find Journey Submit button -->
+                                                                    <button type="submit" class="form-control btn btn-primary">Find Journey</button>
+                                                                </form>
+                                                            </div>
+
+
+                                                            <div role="tabpanel" class="tab-pane" id="planMyJourney">
+                                                                <form action="" method="get" accept-charset="utf-8">
+
+                                                                    <div class="form-group row">
+                                                                        <input type="text" class="form-control" placeholder="Please enter a route">
+                                                                    </div>
+
+                                                                    <div class="form-group row">
+                                                                        <input type="text" class="form-control" placeholder="Please enter a source">
+                                                                    </div>
+
+
+                                                                    <div class="form-group row">
+                                                                        <input type="text" class="form-control" placeholder="Please enter a destination">
+                                                                    </div>
+
+
+                                                                    <div class="form-group row">
+                                                                        <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
+                                                                    </div>
+
+
+                                                                    <div class="form-group row">
+                                                                        <input class="form-control" type="time" value="13:45:00" id="example-time-input">
+                                                                    </div>   
+
+                                                                    <!-- Find Journey Submit button -->
+                                                                    <button type="submit" class="form-control btn btn-primary">Find Journey</button>
+
+                                                                </form>
+                                                            </div>
+                                                            <div role="tabpanel" class="tab-pane" id="geolocationNearby">
+                                                                <form action="map.html" method="get" accept-charset="utf-8">
+                                                                    <button type="submit" class="form-control btn btn-primary">Find Nearby Buses</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                        
-                                <h4>Source</h4>
-                                <div class="form-group row">
-                                    <input type="text" class="form-control" placeholder="Please enter a source">
-                                </div>
-                                        
-                                <h4>Destination</h4>
-                                <div class="form-group row">
-                                    <input type="text" class="form-control" placeholder="Please enter a destination">
-                                </div>
-                                        
-                                <h4>Date</h4>
-                                <div class="form-group row">
-                                    <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
-                                </div>
-                                        
-                                <h4>Time</h4>
-                                <div class="form-group row">
-                                    <input class="form-control" type="time" value="13:45:00" id="example-time-input">
-                                </div>   
-                                
-                                <!-- Find Journey Submit button -->
-                                <button type="submit" class="form-control btn btn-primary">Find Journey</button>
-                            </form> 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        
-    
-        
+
+
+
+
+
         <!-- Code sourced and adapted from https://publish.twitter.com/# -->
         <div class="container-fluid">
-        <aside class="col-md-4 my-sidebar-left">
-            <a class="twitter-timeline" href="https://twitter.com/aaroadwatch" data-tweet-limit="5">Tweets by aaroadwatch</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </aside>
-        <aside class="col-md-4 my-sidebar-left">
-            <a class="twitter-timeline" href="https://twitter.com/DCCTraffic" data-tweet-limit="5">Tweets by DDCTraffic</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </aside>
-        <aside class="col-md-4 my-sidebar-right">
-            <a class="twitter-timeline" href="https://twitter.com/MetEireann" data-tweet-limit="5">Tweets by MetEireann</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </aside>
+            <aside class="col-md-4 my-sidebar-left">
+                <a class="twitter-timeline" href="https://twitter.com/aaroadwatch" data-tweet-limit="5">Tweets by aaroadwatch</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </aside>
+            <aside class="col-md-4 my-sidebar-center">
+                <a class="twitter-timeline" href="https://twitter.com/DCCTraffic" data-tweet-limit="5">Tweets by DCCTraffic</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </aside>
+            <aside class="col-md-4 my-sidebar-right">
+                <a class="twitter-timeline" href="https://twitter.com/MetEireann" data-tweet-limit="5">Tweets by MetEireann</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </aside>
         </div>
-        
+
         <!-- Footer -->
-        <div class="container-fluid"> 
-        <div class="row">
-            <footer class="col-sm-12 my-footer">
-                <p class="text-center">&copy; Copyright 2017</p>
-            </footer>
+        <div class="container-fluid">
+            <div class="row">
+                <footer class="col-sm-12 my-footer">
+                    <p class="text-center">&copy; Copyright 2017</p>
+                </footer>
+            </div>
         </div>
-        </div>
-            
-        
-        
+
+
+
         <!-- jQuery file: Needs to be pasted above Bootstrap file to avoid errors -->    
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        
+
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>   
     </body>
