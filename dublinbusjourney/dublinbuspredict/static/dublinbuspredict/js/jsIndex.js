@@ -21,6 +21,7 @@ function getStops(route) {
         console.log(d)
         document.getElementById("dropdown-list-2").innerHTML = "";
         document.getElementById("search-box-2").value = "";
+        document.getElementById("search-box-3").value = "";
     $.each(d['stops'], function(i, p) {
         $('#dropdown-list-2').append($('<li></li>').val(p).html('<a onclick=getStopsDest(' + p + ')>' + route + ' - ' + p + '</a>'));
     });

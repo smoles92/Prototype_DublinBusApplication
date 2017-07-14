@@ -3,36 +3,36 @@ import json
 import pandas as pd
 
 # Retrieve Real Time Bus Information (for bus stop 1304 (which is my stop))
-# See section 3.4.1 of the document
-base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=6104&routeid=8&maxresults&operator&format=json'
-response = requests.get(base_url)
-results = response.json()
-print(results)
-counter = 1
-for i in results['results']:
-    print('Result Nº' + str(counter) + ':')
-    print(i)
-    counter += 1
+# # See section 3.4.1 of the document
+# base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=6104&routeid=8&maxresults&operator&format=json'
+# response = requests.get(base_url)
+# results = response.json()
+# print(results)
+# counter = 1
+# for i in results['results']:
+#     print('Result Nº' + str(counter) + ':')
+#     print(i)
+#     counter += 1
 
 
 # Retrieve Timetable Bus Information by Date
 # See section 3.4.2 of the document
 # So far, not yet working
-"""base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/timetableinformation?type=day&stopid=1304&routeid=17&datetime=1497873600&format=json'
-response = requests.get(base_url)
-results = response.json()
-print(results)
-for i in results['results']:
-    print(i)"""
+# base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/timetableinformation?type=day&stopid=1304&routeid=17&datetime=2017-07-14 14:45:06&format=json'
+# response = requests.get(base_url)
+# results = response.json()
+# print(results)
+# for i in results['results']:
+#     print(i)
 
 # Retrieve Full Timetable Bus Information
 # See section 3.4.3 of the document
-"""base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/timetableinformation?operator=bac&type=week&stopid=1304&routeid=17&format=json'
+base_url = 'https://data.dublinked.ie/cgi-bin/rtpi/timetableinformation?operator=bac&type=week&stopid=1304&routeid=17&format=json'
 response = requests.get(base_url)
 results = response.json()
 for i in results['results']:
     print(i)
-"""
+
 
 # Retrieve Bus Stop Information
 # See section 3.4.4 of the document

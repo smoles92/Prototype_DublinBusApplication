@@ -3,9 +3,10 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 import json
 import MySQLdb
-from .models import PilotRoutes
+from .models import PilotRoutes, BusStops
 from django.db.models import Q
 
+route_id, source_id, destination_id, direction = 1, 1, 1, 1
 
 def index(request):
     list_routes = ['1', '4', '7', '9', '11', '13', '14', '15', '16', '17', '18', '25', '27', '31', '32',
@@ -35,6 +36,7 @@ def pilot_dest(request):
     source_id = request.GET.get('source')
     route_id = request.GET.get('route')
     print(source_id, route_id)
+    global direction
     direction = PilotRoutes.objects.filter(Q(route_id=route_id) & Q(stop_id=str(source_id))).values_list('direction')[0][0]
     print(direction)
     bus_stops = PilotRoutes.objects.filter(Q(route_id=route_id) & Q(direction=direction))
@@ -53,11 +55,14 @@ def pilot_dest(request):
 
 
 def run_model(request):
+    global route_id
+    global source_id
+    global destination_id
     route_id = request.GET.get('route')
     source_id = request.GET.get('source')
     destination_id = request.GET.get('destination')
     print(route_id, source_id, destination_id)
-    return render('dublinbuspredict/map.html', {'route': route_id, 'source':source_id, 'destination':destination_id})
+    return render('dublinbuspredict/map.html')
 
 
 def map(request):
@@ -74,14 +79,31 @@ def tickets_fares(request):
 
 def sampleQuery(rows):
     # Connect to database using these credentials.
+    global route_id
+    global source_id
+    global destination_id
+    global direction
+    print('From map:', route_id, source_id, destination_id)
+    # direction = PilotRoutes.objects.filter(Q(route_id=route_id) & Q(stop_id=str(source_id))).values_list('direction')[0][0]
+    print('Direction:', direction)
+    # bus_stops = PilotRoutes.objects.filter(Q(route_id=route_id) & Q(direction=direction))
+    # stop_names = PilotRoutes.objects.select_related(depth=1)
+    # for i in stop_names:
+    #     print(i.name)
     db = MySQLdb.connect(user='lucas', db='summerProdb', passwd='hello_world', host='csi6220-3-vm3.ucd.ie')
     cursor = db.cursor()
-    cursor.execute("""
-                        SELECT 46_a_route.stop_sequence, bus_stops.name, bus_stops.long_name, bus_stops.lat, bus_stops.lon 
-                        FROM 46_a_route, bus_stops
-                        WHERE direction = 1
-                            AND 46_a_route.stop_id = bus_stops.stop_id
-                        ORDER BY 46_a_route.stop_sequence;""")
+    cursor.execute('SELECT pilot_routes.sequence, bus_stops.name, bus_stops.long_name, bus_stops.lat, bus_stops.lon '
+                   'FROM pilot_routes, bus_stops '
+                   'WHERE direction = ' + str(direction) + ' AND pilot_routes.route_id = "' + str(route_id) + '" AND pilot_routes.stop_id = bus_stops.stop_id '
+                   'ORDER BY pilot_routes.sequence;')
     rows = cursor.fetchall()
+    print('Here:', rows)
+    # cursor.execute("""
+    #                     SELECT 46_a_route.stop_sequence, bus_stops.name, bus_stops.long_name, bus_stops.lat, bus_stops.lon
+    #                     FROM 46_a_route, bus_stops
+    #                     WHERE direction = 1
+    #                         AND 46_a_route.stop_id = bus_stops.stop_id
+    #                     ORDER BY 46_a_route.stop_sequence;""")
+    # rows = cursor.fetchall()
     db.close()
     return HttpResponse(json.dumps({'data': rows}), content_type="application/json")

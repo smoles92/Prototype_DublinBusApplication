@@ -150,31 +150,31 @@ class Raw2013(models.Model):
 #         unique_together = (('user', 'permission'),)
 # 
 # 
-# class BusRoutes(models.Model):
-#     stop_id = models.CharField(max_length=45, blank=True, null=True)
-#     route_id = models.CharField(max_length=45, blank=True, null=True)
-#     direction = models.IntegerField(blank=True, null=True)
-#     stop_sequence = models.IntegerField(blank=True, null=True)
-#     shape_dist = models.CharField(max_length=45, blank=True, null=True)
-#     unique_id = models.AutoField(primary_key=True)
-# 
-#     class Meta:
-#         managed = False
-#         db_table = 'bus_routes'
-# 
-# 
-# class BusStops(models.Model):
-#     stop_id = models.IntegerField(primary_key=True)
-#     name = models.CharField(max_length=45, blank=True, null=True)
-#     long_name = models.CharField(max_length=45, blank=True, null=True)
-#     lat = models.CharField(max_length=45, blank=True, null=True)
-#     lon = models.CharField(max_length=45, blank=True, null=True)
-# 
-#     class Meta:
-#         managed = False
-#         db_table = 'bus_stops'
-# 
-# 
+class BusRoutes(models.Model):
+    stop_id = models.CharField(max_length=45, blank=True, null=True)
+    route_id = models.CharField(max_length=45, blank=True, null=True)
+    direction = models.IntegerField(blank=True, null=True)
+    stop_sequence = models.IntegerField(blank=True, null=True)
+    shape_dist = models.CharField(max_length=45, blank=True, null=True)
+    unique_id = models.AutoField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'bus_routes'
+
+
+class BusStops(models.Model):
+    stop_id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=45, blank=True, null=True)
+    long_name = models.CharField(max_length=45, blank=True, null=True)
+    lat = models.CharField(max_length=45, blank=True, null=True)
+    lon = models.CharField(max_length=45, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'bus_stops'
+
+
 # class DjangoAdminLog(models.Model):
 #     action_time = models.DateTimeField()
 #     object_id = models.TextField(blank=True, null=True)
@@ -219,31 +219,31 @@ class Raw2013(models.Model):
 #         db_table = 'django_session'
 # 
 # 
-# class HistoricData(models.Model):
-#     vehicle_journey_id = models.IntegerField()
-#     stop_id = models.IntegerField()
-#     journey_pattern_id = models.CharField(max_length=45)
-#     congestion = models.IntegerField()
-#     delay = models.IntegerField()
-#     unix = models.CharField(max_length=45)
-#     weekday = models.IntegerField()
-#     hour = models.IntegerField()
-#     date = models.DateField()
-#     previous_stop = models.IntegerField(blank=True, null=True)
-#     total_seconds = models.IntegerField(blank=True, null=True)
-#     school_holiday = models.CharField(max_length=45)
-#     public_holiday = models.CharField(max_length=45)
-#     summary = models.CharField(max_length=45)
-#     temp = models.FloatField()
-#     rain = models.IntegerField()
-#     wind = models.IntegerField()
-#     unique_id = models.AutoField(primary_key=True)
-# 
-#     class Meta:
-#         managed = False
-#         db_table = 'historic_data'
-# 
-# 
+class HistoricData(models.Model):
+    vehicle_journey_id = models.IntegerField()
+    stop_id = models.IntegerField()
+    journey_pattern_id = models.CharField(max_length=45)
+    congestion = models.IntegerField()
+    delay = models.IntegerField()
+    unix = models.CharField(max_length=45)
+    weekday = models.IntegerField()
+    hour = models.IntegerField()
+    date = models.DateField()
+    previous_stop = models.IntegerField(blank=True, null=True)
+    total_seconds = models.IntegerField(blank=True, null=True)
+    school_holiday = models.CharField(max_length=45)
+    public_holiday = models.CharField(max_length=45)
+    summary = models.CharField(max_length=45)
+    temp = models.FloatField()
+    rain = models.IntegerField()
+    wind = models.IntegerField()
+    unique_id = models.AutoField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'historic_data'
+
+
 class PilotRoutes(models.Model):
     route_id = models.CharField(max_length=45)
     stop_id = models.IntegerField()
