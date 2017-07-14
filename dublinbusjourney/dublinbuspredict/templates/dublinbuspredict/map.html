@@ -22,7 +22,9 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />
   </head>
   <body>
-
+		<!-- Adapted from: https://www.youtube.com/playlist?list=PL41lfR-6DnOovY0t3nBg8Zb6aqm_H70mR -->
+		<!-- Adapted from: https://www.w3schools.com/bootstrap/ -->
+		
         <!-- Main container to give website 12-grid shape -->
         <div class="container-fluid"> 
             <!-- Navigation Bar components -->
@@ -130,21 +132,17 @@
                         <div class="col-sm-2 text-center"><h4>Destination</h4></div>
                         <div class="col-sm-2 text-center"><h4>Journey Time</h4></div>
                         <div class="col-sm-2 text-center"><h4>Price</h4></div>
-                        <div class="col-sm-4 text-center"><h4>Show Details</h4></div>
+                        <div class="col-sm-4 text-center"><h4 id="showDetails">Show Details</h4></div>
                     </div>
-                    <div class="row my-individual-result">
+                    <div class="row my-individual-result" id="toggleDetailsRes">
                         <div class="col-sm-2 text-center"><h5>Display Source</h5></div>
                         <div class="col-sm-2 text-center"><h5>Display Destination</h5></div>
                         <div class="col-sm-2 text-center"><h5>Display Journey Time</h5></div>
                         <div class="col-sm-2 text-center"><h5>Display Price</h5></div>
-                        <div class="col-sm-4 text-center"><h5>More Information</h5></div>
+                        <div class="col-sm-4 text-center"><h4 id="RouteMap">More Information</h4></div>
                     </div>
-                    <div class="row my-individual-result">
-                        <div class="col-sm-2 text-center"><h5>Display Source</h5></div>
-                        <div class="col-sm-2 text-center"><h5>Display Destination</h5></div>
-                        <div class="col-sm-2 text-center"><h5>Display Journey Time</h5></div>
-                        <div class="col-sm-2 text-center"><h5>Display Price</h5></div>
-                        <div class="col-sm-4 text-center"><h5>More Information</h5></div>
+                    <div class="row my-individual-result" id="toggleRouteMap">
+                        <div class="col-sm-12 text-center"><h5>Display Route table and information</h5></div>
                     </div>
                 </div> 
             </div>
