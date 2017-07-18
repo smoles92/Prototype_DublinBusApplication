@@ -1,6 +1,5 @@
 from DublinBusAPIs import bus_location_finder
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 from dateutil import parser
 import requests
 from model_prototype_0 import model

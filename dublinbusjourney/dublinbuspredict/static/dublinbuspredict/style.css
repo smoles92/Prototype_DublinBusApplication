@@ -1,4 +1,35 @@
 /* index.html */
+/* Adapted from: https://bootsnipp.com/snippets/50AZX */
+
+.main-form .nav > li{
+	width: 33%;
+}
+
+.main-form .nav-tabs > li > a{
+	border-radius: 0;
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	outline: 0;
+	text-transform: uppercase;
+	color: black;
+	font-weight: 600;
+	font-size: 13px;
+}
+
+.main-form .nav-tabs > li > a:hover{
+	color: grey;
+}
+
+.main-form .form-control{
+	margin-top: 15px;
+	border-radius: 0;
+	box-shadow: none;
+	border:1px solid #f0f0f0;
+}
+
+/* index.html */
+
 .my-sidebar-left{
     margin-top: 20px;
     margin-bottom: 20px;
@@ -20,20 +51,16 @@
   margin-left: 10px;
 }
 
-/*.my-navbar{
-    background-color: #2ab5f0;
-
-}*/
-
 .my-route-search{
     position: absolute;
-    top: 60px;
-    left: 60px;
+    /*top: 60px;
+    left: 60px;*/
+    top: 45%;
     background-color: white;    
 }
 
 .my-carousel{
-    margin-top: 50px;
+    margin-top: 60px;
 }
 
 /*dropdown menus for index.html*/

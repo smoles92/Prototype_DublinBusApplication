@@ -1,9 +1,10 @@
-from DublinBusAPIs import bus_location_finder
-from datetime import datetime
-from datetime import timedelta
+# from dublinbusjourney.dublinbuspredict.Algorithms.bus_location_finder import main_bus_finder
+from .bus_location_finder import main_bus_finder
+from datetime import datetime, timedelta
 from dateutil import parser
 import requests
-from model_prototype_0 import model
+from .model_prototype_0 import model
+# from dublinbusjourney.dublinbuspredict.Algorithms.model_prototype_0 import model
 import time
 
 def holidays(date):
@@ -59,8 +60,15 @@ def main(bus_route,source_stop, destination_stop):
     source_stop = source_stop
     destination_stop = destination_stop
     bus_route = bus_route
-    information_from_bus_finder = bus_location_finder.main(destination_stop, bus_route)
+    print("Inside central:", bus_route, source_stop, destination_stop)
+    information_from_bus_finder = main_bus_finder(destination_stop, bus_route)
+    if type(information_from_bus_finder) == str:
+        print(information_from_bus_finder)
+        return information_from_bus_finder
     rain = weather()
+    counter = 1
+    buses_for_website = []
+    bus = []
     for i in information_from_bus_finder:
         for j in i:
             delay = j['delay']
@@ -72,14 +80,18 @@ def main(bus_route,source_stop, destination_stop):
             # print(delay, hour, weekday, p_holiday, s_holiday, rain)
             j['duration'] = (model(delay, hour, weekday, p_holiday, s_holiday, rain))[0]
             j['predicted_arrival_time'] = (time_to_arrive(parser.parse(j['datetime']), j['duration']))
+            if str(j['stopid']) == source_stop or str(j['stopid']) == destination_stop:
+                print('Bus number', counter)
+                print(j)
+                bus.append(j)
+                counter += 1
+        # buses_for_website.append(bus)
     print(time.time())
-    return information_from_bus_finder
-    # counter = 1
-    # for i in information_from_bus_finder:
-    #     print('Bus number', counter)
-    #     for j in i:
-    #         print(j)
-    #     counter += 1
+    print(bus)
+    return bus
 
 # if __name__ == '__main__':
-#     main(source_stop, destination_stop)
+#     bus_route = '76'
+#     source_stop = '2118'
+#     destination_stop = '2120'
+#     main(bus_route, source_stop, destination_stop)

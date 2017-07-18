@@ -1,5 +1,6 @@
 from django.conf.urls import url
-from . import views 
+from . import views
+
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
@@ -11,4 +12,6 @@ urlpatterns = [
     url(r'^pilotRoutes', views.pilot_routes, name='pilot_routes'),
     url(r'^pilotDest$', views.pilot_dest, name='pilot_dest'),
     url(r'^runModel$', views.run_model, name='run_model'),
+    url(r'^loadRoutesForMap$', views.load_routes_for_map, name='load_routes_for_map'),
+    url(r'^divs$', views.divs, name='divs'),
     ]

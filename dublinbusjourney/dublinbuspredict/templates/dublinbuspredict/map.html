@@ -15,14 +15,17 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       	      	
       	<script type="text/javascript" src="{% static 'dublinbuspredict/js/displaySearch.js' %}"></script>
-        <script type="text/javascript" src="{% static 'dublinbuspredict/js/jsIndex.js' %}"></script>
+        <!--<script type="text/javascript" src="{% static 'dublinbuspredict/js/jsIndex.js' %}"></script>-->
       	
         <!-- Google Maps -->    
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxpqeoG1jNA4VHBlFeopWuRmFoYTh-ME&callback=initMap"></script>
 
 		<link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />
   </head>
-  <body onload="">
+    {% load staticfiles %}
+  <body onload="loadRoutes()">
+		<!-- Adapted from: https://www.youtube.com/playlist?list=PL41lfR-6DnOovY0t3nBg8Zb6aqm_H70mR -->
+		<!-- Adapted from: https://www.w3schools.com/bootstrap/ -->
 
         <!-- Main container to give website 12-grid shape -->
         <div class="container-fluid"> 
@@ -97,15 +100,34 @@
                         <div class="form-group my-changed-journey">
                             <label for="route">Route</label>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Enter a route">
+                                    {% load static %}
+                                    <div class="dropdown">
+                                        <input id="search-box-4" oninput="searchFunctionRoute2()" type="text" name="search" placeholder="Enter route nº...">
+                                        <div class="dropdown-content">
+                                            <ul class="dropdown-list" id ="dropdown-list-4">
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             <label for="source">Source</label>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Select a source">
+                                    <div class="dropdown">
+                                        <input id="search-box-5" oninput="searchFunctionSRC2()" type="text" name="search2" placeholder="Enter starting stop!">
+                                        <div class="dropdown-content">
+                                            <ul class="dropdown-list" id="dropdown-list-5">
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             <label for="source">Destination</label>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Select a destination">
+                                    <div class="dropdown">
+                                        <input id="search-box-6" oninput="searchFunctionDest2()" type="text" name="search2" placeholder="Enter destination stop!">
+                                        <div class="dropdown-content">
+                                            <ul class="dropdown-list" id="dropdown-list-6">
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             <label for="date">Date</label>
                                 <div class="form-group">
@@ -115,7 +137,20 @@
                                 <div class="form-group">
                                     <input class="form-control" type="time" value="13:45:00" id="example-time-input">
                                 </div>
-                            <button type="submit" class="form-control btn btn-primary">Find Journey</button>
+                            <button type="button" id="submit-route2" onclick="window.location='http://127.0.0.1:8000/dublinbuspredict/map';" class="form-control btn btn-primary">Find Journey</button>
+                                <script>
+                                    document.getElementById("submit-route2").addEventListener("click", function(){
+                                        route = document.getElementById("search-box-4").value;
+                                        source = document.getElementById("search-box-5").value;
+                                        destination = document.getElementById("search-box-6").value;
+                                        console.log('Route:', route)
+                                        console.log('Source:', source)
+                                        console.log('Destination:', destination)
+                                        $.getJSON("http://127.0.0.1:8000/dublinbuspredict/runModel", {"route":route, "source":source, "destination":destination}, function(d) {
+                                            console.log(d)
+                                        });
+                                    });
+                                </script>
                         </div>
                     </form>
                 </div>
@@ -131,21 +166,17 @@
                         <div class="col-sm-2 text-center"><h4>Destination</h4></div>
                         <div class="col-sm-2 text-center"><h4>Journey Time</h4></div>
                         <div class="col-sm-2 text-center"><h4>Price</h4></div>
-                        <div class="col-sm-4 text-center"><h4>Show Details</h4></div>
+                        <div class="col-sm-4 text-center"><h4 id="showDetails">Show Details</h4></div>
                     </div>
-                    <div class="row my-individual-result">
-                        <div class="col-sm-2 text-center"><h5>Display Source</h5></div>
-                        <div class="col-sm-2 text-center"><h5>Display Destination</h5></div>
-                        <div class="col-sm-2 text-center"><h5>Display Journey Time</h5></div>
-                        <div class="col-sm-2 text-center"><h5>Display Price</h5></div>
-                        <div class="col-sm-4 text-center"><h5>More Information</h5></div>
+                    <div class="row my-individual-result" id="toggleDetailsRes" id="info-divs">
+                        <!--<div class="col-sm-2 text-center"><h5>Display Source</h5></div>-->
+                        <!--<div class="col-sm-2 text-center"><h5>Display Destination</h5></div>-->
+                        <!--<div class="col-sm-2 text-center"><h5>Display Journey Time</h5></div>-->
+                        <!--<div class="col-sm-2 text-center"><h5>Display Price</h5></div>-->
+                        <!--<div class="col-sm-4 text-center"><h4 id="RouteMap">More Information</h4></div>-->
                     </div>
-                    <div class="row my-individual-result">
-                        <div class="col-sm-2 text-center"><h5>Display Source</h5></div>
-                        <div class="col-sm-2 text-center"><h5>Display Destination</h5></div>
-                        <div class="col-sm-2 text-center"><h5>Display Journey Time</h5></div>
-                        <div class="col-sm-2 text-center"><h5>Display Price</h5></div>
-                        <div class="col-sm-4 text-center"><h5>More Information</h5></div>
+                    <div class="row my-individual-result" id="toggleRouteMap">
+                        <div class="col-sm-12 text-center"><h5>Display Route table and information</h5></div>
                     </div>
                 </div> 
             </div>

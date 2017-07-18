@@ -82,11 +82,3 @@ function searchFunctionDest() {
     }
 }
 
-//function passToMap() {
-//    route = document.getElementById("search-box-1").value;
-//    source = document.getElementById("search-box-2").value;
-//    destination = route = document.getElementById("search-box-3").value;
-//    console.log('Route:', route)
-//    console.log('Source:', source)
-//    console.log('Destination:', destination)
-//}

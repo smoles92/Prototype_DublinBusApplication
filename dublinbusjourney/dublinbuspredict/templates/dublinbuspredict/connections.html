@@ -16,7 +16,14 @@
     <body>
     	{% load staticfiles %}
     	<link rel="stylesheet" type="text/css" href="{% static 'dublinbuspredict/style.css' %}" />
-        <!-- Navigation Bar components -->
+        
+        
+        <!-- Adapted from: https://www.youtube.com/playlist?list=PL41lfR-6DnOovY0t3nBg8Zb6aqm_H70mR -->
+		<!-- Adapted from: https://www.w3schools.com/bootstrap/ -->
+        <!-- Main container to give website 12-grid shape -->
+        <div class="container-fluid">
+            
+            <!-- Navigation Bar components -->
             <header>
                 <nav class="navbar navbar-default navbar-fixed-top">
                 <!-- Navbar takes up total width of browser with fluid -->
@@ -46,12 +53,12 @@
                                             <button class="btn btn-primary">Home</button>
                                         </li>
                                         
-                                        <li><a href="/index.html">Home</a></li>
-                                        <li><a href="/timetable.html">Timetables</a></li>
-                                        <li><a href="tickets_fares.html">Tickets & Fares</a></li>
-                                        <li><a href="/connections.html">Connections</a></li>
+                                        <li><a href="/dublinbuspredict/">Home</a></li>
+                                        <li><a href="/dublinbuspredict/map">Timetables</a></li>
+                                        <li><a href="/dublinbuspredict/tickets_fares">Tickets & Fares</a></li>
+                                        <li><a href="/dublinbuspredict/connections">Connections</a></li>
                                         <li role="separator" class="divider"></li>
-                                        <li><a href="/contact.html">Contact Us</a></li>
+                                        <li><a href="/dublinbuspredict/contact">Contact Us</a></li>
                                     </ul>
                                 </li>
                             </ul>
