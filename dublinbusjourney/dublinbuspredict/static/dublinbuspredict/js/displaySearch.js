@@ -176,35 +176,48 @@ function initMap() {
 //
 function loadRoutes(){
     console.log('HEReeeeeeeeeeeeeee!')
+    var counter = 0
     var a = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/loadRoutesForMap", null, function(d) {
         $.each(d['list_routes'], function(i, p) {
             $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getStops2("' + p + '")>' + p + '</a>'));
         })
     });
     var b = $.getJSON("http://127.0.0.1:8000/dublinbuspredict/divs", null, function(d) {
-        console.log('Second call!')
-        if (d.length == 15){
-                console.log(p)
-            }
-        else{
-        $.each(d['info_buses'], function(i, p) {
-            console.log(p)
-            for (var i = 0; i < p.length; i++){
-                    console.log(p[i])
-//                    var node = document.createElement("DIV");                 // Create a <li> node
-//                    var textnode = document.createTextNode(p[i][]);         // Create a text node
-//                    node.appendChild(textnode);                              // Append the text to <li>
-//                    document.getElementById("myList").appendChild(node);
-//                    document.getElementById("info-divs").innerHTML=
-//                    <div class="col-sm-2 text-center"><h5>Display Source</h5></div>
-//                        <div class="col-sm-2 text-center"><h5>Display Destination</h5></div>
-//                        <div class="col-sm-2 text-center"><h5>Display Journey Time</h5></div>
-//                        <div class="col-sm-2 text-center"><h5>Display Price</h5></div>
-//                        <div class="col-sm-4 text-center"><h4 id="RouteMap">More Information</h4></div>
-            }
-//            $('#dropdown-list-4').append($('<li></li>').val(p).html('<a onclick=getStops2("' + p + '")>' + p + '</a>'));
-        })
-        }
+        console.log('Second call!');
+        console.log('Results:', d);
+//        if (d.length == 15){
+//                console.log(p);
+//        }
+//        else{
+////        $.each(d['info_buses'], function(i, p) {
+////            console.log(p);
+////            console.log(d['journey_times'])
+////        })
+//            var theDiv = document.getElementById("info-divs");
+//            if (d['info_buses'].length == 2){
+//                console.log(d['info_buses'][0])
+//                var content = document.createTextNode("<div class='row my-individual-result' id='toggleDetailsRes'><div class='col-sm-2 text-center'><h5>" + (d['info_buses'][0]['predicted_arrival_time'])
+//                    + "</h5></div><div class='col-sm-2 text-center'><h5>" + (d['info_buses'][1]['predicted_arrival_time']) + "</h5></div><div class='col-sm-2 text-center'><h5>" + (d['journey_time'][0]) +
+//                    "</h5></div><div class='col-sm-2 text-center'><h5>Display Price</h5></div><div class='col-sm-4 text-center'><h4 id='RouteMap'>More Information</h4></div></div><div " +
+//                    "class='row my-individual-result' id='toggleRouteMap'><div class='col-sm-12 text-center'><h5>Display Route table and information</h5></div></div>")
+//                theDiv.appendChild(content);
+//            }
+//            else if (d['info_buses'].length == 4){
+//                console.log(d['info_buses'][0])
+//                console.log(d['journey_times'][0])
+//                var content = document.createTextNode("<div class='row my-individual-result' id='toggleDetailsRes'><div class='col-sm-2 text-center'><h5>" + (d['info_buses'][0]['predicted_arrival_time'])
+//                    + "</h5></div><div class='col-sm-2 text-center'><h5>" + (d['info_buses'][1]['predicted_arrival_time']) + "</h5></div><div class='col-sm-2 text-center'><h5>" + (d['journey_times'][0]) +
+//                    "</h5></div><div class='col-sm-2 text-center'><h5>Display Price</h5></div><div class='col-sm-4 text-center'><h4 id='RouteMap'>More Information</h4></div></div><div " +
+//                    "class='row my-individual-result' id='toggleRouteMap'><div class='col-sm-12 text-center'><h5>Display Route table and information</h5></div></div>")
+//                theDiv.appendChild(content);
+//                var content = document.createTextNode("<div class='row my-individual-result' id='toggleDetailsRes'><div class='col-sm-2 text-center'><h5>" + (d['info_buses'][2]['predicted_arrival_time'])
+//                    + "</h5></div><div class='col-sm-2 text-center'><h5>" + (d['info_buses'][3]['predicted_arrival_time']) + "</h5></div><div class='col-sm-2 text-center'><h5>" + (d['journey_times'][1]) +
+//                    "</h5></div><div class='col-sm-2 text-center'><h5>Display Price</h5></div><div class='col-sm-4 text-center'><h4 id='RouteMap'>More Information</h4></div></div><div " +
+//                    "class='row my-individual-result' id='toggleRouteMap'><div class='col-sm-12 text-center'><h5>Display Route table and information</h5></div></div>")
+//                theDiv.appendChild(content);
+//            }
+//            else if (d['info_buses'].length == 6){}
+//        }
     });
 }
 

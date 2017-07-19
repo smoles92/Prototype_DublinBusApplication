@@ -1,0 +1,2 @@
+stop = [({'stopid': 2243, 'arrival_hour': '18', 'predicted_arrival_time': '18/07/2017 18:36:52', 'datetime': '18/07/2017 18:30:00', 'previous_stop': 'Starting stop', 'duration': 412.61750000000001, 'delay': 0}, {'stopid': 2200, 'arrival_hour': '18', 'predicted_arrival_time': '18/07/2017 18:37:45', 'datetime': '18/07/2017 18:30:56', 'previous_stop': 2243, 'duration': 409.04750000000001, 'delay': -4})]
+print(stop[0][0]['predicted_arrival_time'])

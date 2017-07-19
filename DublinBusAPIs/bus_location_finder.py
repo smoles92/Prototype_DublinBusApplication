@@ -376,7 +376,7 @@ def main(at_stop_id, bus_route):
     stops_for_model = info_for_model(stop_ids, list_of_stops, bus_route)
     return stops_for_model
 
-# if __name__ == '__main__':
-#     at_stop_id = '2064'
-#     bus_route = '46A'
-#     print(main(at_stop_id, bus_route))
+if __name__ == '__main__':
+    at_stop_id = '2064'
+    bus_route = '46A'
+    print(main(at_stop_id, bus_route))

@@ -55,7 +55,86 @@ def time_to_arrive(datetime, sec):
     return new_time
 
 
-def main(bus_route,source_stop, destination_stop):
+def treat_data(data, source_stop):
+    cleaned = []
+    for i in data:
+        # x = i[0]['predicted_arrival_time']
+        # x = parser.parse(x)
+        # print('First time:', x)
+        found = False
+        for j in i:
+            # print(j, source_stop)
+            if str(j['stopid']) == str(source_stop):
+                x = j['predicted_arrival_time']
+                x = parser.parse(x)
+                found = True
+            if found:
+                y = j['predicted_arrival_time']
+                y = parser.parse(y)
+                print(x)
+                print('Matching against:', y)
+                # print('Printing data here:', j)
+                if x < y:
+                    # Minus and get it in seconds and then convert to minues
+                    journey_time = (y - x)
+                    print('Journey time:', journey_time)
+                    j['journey_time'] = str(journey_time)
+                elif y < x:
+                    # Minus and get it in seconds and then convert to minues
+                    journey_time = (x - y)
+                    print('Journey time:', journey_time)
+                    j['journey_time'] = str(journey_time)
+                else:
+                    journey_time = (x - y)
+                    j['journey_time'] = str(journey_time)
+                j.pop('previous_stop', None)
+                j.pop('datetime', None)
+                j.pop('delay', None)
+                j.pop('duration', None)
+                j.pop('arrival_hour', None)
+                print('Printing data here:', j)
+                cleaned.append(j)
+    bus3, bus2, bus1 = [], [], []
+    # for i in range(0, len(data)):
+    #     if i % 2 == 1:
+    #         if len(bus1) != 2 and i <= 1:
+    #             bus1.append((data[i - 1], data[i]))
+    #         elif len(bus2) != 2 and i <= 3:
+    #             bus2.append((data[i - 1], data[i]))
+    #         elif len(bus1) != 2:
+    #             bus3.append((data[i - 1], data[i]))
+    # print('Bus 1:', bus1)
+    # print('Bus 2:', bus2)
+    # print('Bus 3:', bus3)
+    # total_buses = [bus1, bus2, bus3]
+    # clean = [x for x in total_buses if x != []]
+    # ready_data = []
+    # x = (data[0][0])['predicted_arrival_time']
+    # x = parser.parse(x)
+    # # Get journey times
+    # if len(bus1) != 0:
+    #     for i in data:
+    #         # Arrival at source
+    #         print('WOOOOOOOW!', i[0][0])
+    #         print('x:', x)
+    #         # Arrival at destination
+    #         y = (i[0])['predicted_arrival_time']
+    #         y = parser.parse(y)
+    #         print('y', y)
+    #         if x < y:
+    #         # Minus and get it in seconds and then convert to minues
+    #             print(x, 'minus', y)
+    #             journey_time = (y - x)
+    #         elif y < x:
+    #             # Minus and get it in seconds and then convert to minues
+    #             print(y, 'minus', x)
+    #             journey_time = (x - y)
+    #         i[0]
+    #         print('Journey time is', journey_time, 'minutes.')
+    return cleaned
+
+
+def main(bus_route, source_stop, destination_stop):
     print(time.time())
     source_stop = source_stop
     destination_stop = destination_stop
@@ -66,9 +145,8 @@ def main(bus_route,source_stop, destination_stop):
         print(information_from_bus_finder)
         return information_from_bus_finder
     rain = weather()
-    counter = 1
-    buses_for_website = []
-    bus = []
+    # buses_for_website = []
+    # bus = []
     for i in information_from_bus_finder:
         for j in i:
             delay = j['delay']
@@ -80,18 +158,22 @@ def main(bus_route,source_stop, destination_stop):
             # print(delay, hour, weekday, p_holiday, s_holiday, rain)
             j['duration'] = (model(delay, hour, weekday, p_holiday, s_holiday, rain))[0]
             j['predicted_arrival_time'] = (time_to_arrive(parser.parse(j['datetime']), j['duration']))
-            if str(j['stopid']) == source_stop or str(j['stopid']) == destination_stop:
-                print('Bus number', counter)
-                print(j)
-                bus.append(j)
-                counter += 1
-        # buses_for_website.append(bus)
-    print(time.time())
-    print(bus)
-    return bus
+            if str(j['stopid']) == source_stop:
+                j['status'] = 'src'
+            elif str(j['stopid']) == destination_stop:
+                j['status'] = 'dest'
+            else:
+                j['status'] = 'normal'
 
-# if __name__ == '__main__':
-#     bus_route = '76'
-#     source_stop = '2118'
-#     destination_stop = '2120'
-#     main(bus_route, source_stop, destination_stop)
+    #     # buses_for_website.append(bus)
+    # print(time.time())
+    # print(bus)
+    clean = treat_data(information_from_bus_finder, source_stop)
+    print(clean)
+    return clean
+
+if __name__ == '__main__':
+    bus_route = '76'
+    source_stop = '2118'
+    destination_stop = '2120'
+    main(bus_route, source_stop, destination_stop)

@@ -14,6 +14,7 @@ from .Algorithms import project_central
 import MySQLdb
 import time
 from datetime import datetime, timedelta
+from dateutil import parser
 
 route_id, source_id, destination_id, direction = '56A', 1, 1, 1
 new_info_buses = ['1']
@@ -78,7 +79,7 @@ def run_model(request):
     destination_id = request.GET.get('destination')
     print(route_id, source_id, destination_id)
     new_info_buses = project_central.main(route_id, source_id, destination_id)
-    print('In da views!')
+    print('In da views!', new_info_buses)
     return render(request, 'dublinbuspredict/map.html', {'info_buses':new_info_buses})
 
 def divs(request):
@@ -88,33 +89,6 @@ def divs(request):
         time.sleep(5)
         print('Same')
     old_info_buses = new_info_buses
-    bus3, bus2, bus1 = [], [], []
-    for i in range(0, len(new_info_buses)):
-        if i % 2 == 1:
-            if len(bus1) != 2:
-                bus1.append((new_info_buses[i - 1], new_info_buses[i]))
-            elif len(bus2) != 2:
-                bus2.append((new_info_buses[i - 1], new_info_buses[i]))
-            elif len(bus3) != 2:
-                bus3.append((new_info_buses[i - 1], new_info_buses[i]))
-    print('Bus 1:', bus1)
-    print('Bus 2:', bus2)
-    print('Bus 3:', bus3)
-    total_buses = [bus1, bus2, bus3]
-    clean = [x for x in total_buses if x != []]
-    # Get journey times
-    if len(bus1) != 0:
-        for i in clean:
-            # Arrival at source
-            print('WOOOOOOOW!', i[0][0])
-            x = [i][0][0]['predicted_arrival_time']
-            x = datetime.strptime(x, '%H:%M:%S')
-            # Arrival at destination
-            y = [i][0][1]['predicted_arrival_time']
-            y = datetime.strptime(y, '%H:%M:%S')
-            # Minus and get it in seconds and then convert to minues
-            journey_time =(y - x) * 60
-            print('Journey time is', journey_time, 'minutes.')
     return HttpResponse(json.dumps({'list_routes': list_routes, 'info_buses': new_info_buses}), content_type='application/json')
 
 def load_routes_for_map(request):
@@ -123,6 +97,9 @@ def load_routes_for_map(request):
     global route_id
     global destination_id
     global new_info_buses
+    # new_info_buses = ['1']
+    # global old_info_buses
+    # old_info_buses = []
     return HttpResponse(json.dumps({'list_routes': list_routes, 'info_buses': new_info_buses}), content_type='application/json')
 
 def map(request):
