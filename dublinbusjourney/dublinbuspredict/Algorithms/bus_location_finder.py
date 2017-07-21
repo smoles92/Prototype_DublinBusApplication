@@ -235,7 +235,7 @@ def get_all_stops(bus_position, stop_ids, at_stop_id):
     """Receives the list that says where each bus is, the list of stops in that route in that direction, and the source stop"""
     # Create empty list to hold the stops between where each bus is currently and the source stop
     list_of_stops = []
-
+    print('List:', bus_position)
     # Populate list
     for i in bus_position:
         # Create list for each bus (bus 1, bus 2, bus 3)
@@ -253,6 +253,8 @@ def get_all_stops(bus_position, stop_ids, at_stop_id):
                 break
         # Append that bus to the list_of_stops list
         list_of_stops.append(bus)
+        if str(i) == str(at_stop_id):
+            break
     if len(list_of_stops) == 1:
         pass
     elif len(list_of_stops) == 2:
@@ -352,7 +354,7 @@ def info_for_model(stop_list, stops, route):
                 # continue
             # Add in the delay
             get_delay(first_3_buses)
-
+            print(i, first_3_buses)
             # Have to check if the bus it at the first stop, in which case, we just say 'Starting stop' for previous_stop
             if i == stop_list[0]:
                     previous_stop = 'Starting stop'

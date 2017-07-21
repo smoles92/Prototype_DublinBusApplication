@@ -75,5 +75,16 @@ def model(delay, hour, weekday, p_holiday, s_holiday, rain):
                             'public_holiday': [p_holiday], 'rain':[rain]})
 
     predict_duration = rtr.predict(input_data)
-    # print(predict_duration)
+    print(predict_duration)
     return predict_duration
+
+
+
+if __name__ == '__main__':
+    delay = 355
+    hour = 15
+    weekday = 4
+    p_holiday = False
+    s_holiday = True
+    rain = 0
+    model(delay, hour, weekday, p_holiday, s_holiday, rain)
