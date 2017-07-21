@@ -3,8 +3,9 @@ from .bus_location_finder import main_bus_finder
 from datetime import datetime, timedelta
 from dateutil import parser
 import requests
-from .model_prototype_0 import model
+from .model_prototype_1 import model
 # from dublinbusjourney.dublinbuspredict.Algorithms.model_prototype_0 import model
+# from dublinbusjourney.dublinbuspredict.Algorithms.model_prototype_1 import model
 import time
 
 def holidays(date):
@@ -43,7 +44,7 @@ def weather():
     base_url_time_machine = 'http://api.wunderground.com/api/c59c002ced7bb1cb/conditions/q/IE/Dublin.json'
     response = requests.get(base_url_time_machine)
     results = response.json()
-    return results['current_observation']['precip_1hr_metric'][1:]
+    return results['current_observation']['precip_1hr_metric'][1:], results['current_observation']['wind_kph'], results['current_observation']['temp_c']
     # for i in results['current_observation']:
     #     print(i)
 
@@ -94,43 +95,6 @@ def treat_data(data, source_stop):
                 j.pop('arrival_hour', None)
                 print('Printing data here:', j)
                 cleaned.append(j)
-    bus3, bus2, bus1 = [], [], []
-    # for i in range(0, len(data)):
-    #     if i % 2 == 1:
-    #         if len(bus1) != 2 and i <= 1:
-    #             bus1.append((data[i - 1], data[i]))
-    #         elif len(bus2) != 2 and i <= 3:
-    #             bus2.append((data[i - 1], data[i]))
-    #         elif len(bus1) != 2:
-    #             bus3.append((data[i - 1], data[i]))
-    # print('Bus 1:', bus1)
-    # print('Bus 2:', bus2)
-    # print('Bus 3:', bus3)
-    # total_buses = [bus1, bus2, bus3]
-    # clean = [x for x in total_buses if x != []]
-    # ready_data = []
-    # x = (data[0][0])['predicted_arrival_time']
-    # x = parser.parse(x)
-    # # Get journey times
-    # if len(bus1) != 0:
-    #     for i in data:
-    #         # Arrival at source
-    #         print('WOOOOOOOW!', i[0][0])
-    #         print('x:', x)
-    #         # Arrival at destination
-    #         y = (i[0])['predicted_arrival_time']
-    #         y = parser.parse(y)
-    #         print('y', y)
-    #         if x < y:
-    #         # Minus and get it in seconds and then convert to minues
-    #             print(x, 'minus', y)
-    #             journey_time = (y - x)
-    #         elif y < x:
-    #             # Minus and get it in seconds and then convert to minues
-    #             print(y, 'minus', x)
-    #             journey_time = (x - y)
-    #         i[0]
-    #         print('Journey time is', journey_time, 'minutes.')
     return cleaned
 
 
@@ -144,19 +108,22 @@ def main(bus_route, source_stop, destination_stop):
     if type(information_from_bus_finder) == str:
         print(information_from_bus_finder)
         return information_from_bus_finder
-    rain = weather()
+    forecast = weather()
+    rain = forecast[0]
+    wind = forecast[1]
+    temp = forecast[2]
     # buses_for_website = []
     # bus = []
     for i in information_from_bus_finder:
         for j in i:
             delay = j['delay']
-            hour = j['arrival_hour']
+            hour = j['datetime']
             weekday = datetime.weekday(parser.parse(j['datetime']))
             holiday = holidays(j['datetime'])
             p_holiday = holiday[0]
             s_holiday = holiday[1]
             # print(delay, hour, weekday, p_holiday, s_holiday, rain)
-            j['duration'] = (model(delay, hour, weekday, p_holiday, s_holiday, rain))[0]
+            j['duration'] = model(bus_route, j['stopid'], hour, weekday, p_holiday, s_holiday, rain, wind, temp)[0]
             j['predicted_arrival_time'] = (time_to_arrive(parser.parse(j['datetime']), j['duration']))
             if str(j['stopid']) == source_stop:
                 j['status'] = 'src'
