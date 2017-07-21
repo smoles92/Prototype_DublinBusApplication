@@ -66,8 +66,9 @@ def model(bus_route, stopid, arrival_time, day, p_holiday, s_holiday, rain, wind
                                'public_holiday': [p_holiday], 'rain':[rain], 'wind':[wind], 'temp':[temp]})
 
     # 4 load in the model.
-    print('HEREEEEEEEEEEEEEEEE', os.path.abspath('trained_modelv3.pkl'))
-    rtr = joblib.load('C:\\Users\\lucas\Desktop\\Codex\\UnivDublin\\SummerProject\\CodeRepository\\dublinbusjourney\\dublinbuspredict\\Algorithms\\trained_modelv4.pkl')
+    # print('HEREEEEEEEEEEEEEEEE', os.path.abspath('trained_modelv3.pkl'))
+    # rtr = joblib.load('C:\\Users\\lucas\Desktop\\Codex\\UnivDublin\\SummerProject\\CodeRepository\\dublinbusjourney\\dublinbuspredict\\Algorithms\\trained_modelv4.pkl')
+    rtr = joblib.load('/home/csstudent/data_model/rained_modelv4.pkl')
 
     # 5 predict the delay based on the input.
     predict_delay = rtr.predict(input_data)
